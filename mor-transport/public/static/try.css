@@ -1,0 +1,460 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    width: 100%;
+    background: linear-gradient(to bottom, #3a7bd5, #3a6073);
+    background-position: center;
+    background-size: cover;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.navbar img{
+    width: 30%;
+    height: 30%;
+}
+
+
+.menu ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.menu ul li {
+    position: relative;
+}
+
+.menu ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu ul li a:hover, .menu ul li a.active {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn {
+    width: 100px;
+    height: 40px;
+    background: #3399FF;
+    border: 2px solid #3399FF;
+    margin-top: 13px;
+    color: #fff;
+    font-size: 15px;
+    border-bottom-right-radius: 5px;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #0066CC;
+    color: #fff;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.srch:focus {
+    outline: none;
+}
+
+.content {
+    width: 1200px;
+    flex: 1;
+    margin: auto;
+    color: #fff;
+    position: relative;
+}
+
+.content .par {
+    padding-left: 20px;
+    padding-bottom: 25px;
+    font-family: Arial;
+    letter-spacing: 1.2px;
+    line-height: 30px;
+}
+
+.content h1 {
+    font-family: 'Times New Roman';
+    font-size: 50px;
+    padding-left: 20px;
+    margin-top: 9%;
+    letter-spacing: 2px;
+}
+
+.content .cn {
+    width: 160px;
+    height: 40px;
+    background: #3399FF;
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .4s ease;
+}
+
+.content .cn a {
+    text-decoration: none;
+    color: #fff;
+    transition: .3s ease;
+}
+
+.cn:hover {
+    background-color: #0066CC;
+}
+
+.content span {
+    color: #3399FF;
+    font-size: 65px;
+}
+
+.form {
+    width: 310px;
+    height: auto; /* Adjust height to auto to fit content */
+    background: rgba(0, 0, 0, 0.85); /* Slightly transparent background */
+    position: absolute;
+    top: 20px;
+    left: 870px;
+    transform: translate(0%, -5%);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.form h2 {
+    width: 80%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: #fff; /* Keep text white for contrast */
+    font-size: 22px;
+    background-color: #3399FF;
+    border-radius: 10px;
+    margin: 0 auto 20px auto; /* Center and add space below */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for button effect */
+}
+
+.form input {
+    width: 100%;
+    height: 40px; /* Increase height for better UX */
+    background: rgba(255, 255, 255, 0.1); /* Light background for contrast */
+    border: 1px solid #3399FF; /* Border for better visibility */
+    border-radius: 5px; /* Rounded corners */
+    color: #fff;
+    font-size: 16px; /* Slightly larger font */
+    padding: 8px;
+    margin-top: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+}
+
+.form input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.2); /* Slightly lighter background on focus */
+    border-color: #00CCFF; /* Bright border on focus */
+}
+
+::placeholder {
+    color: #ccc; /* Lighter placeholder color */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btnn {
+    width: 100%;
+    height: 45px; /* Increase height */
+    background: linear-gradient(135deg, #3399FF, #33CCFF); /* Gradient button background */
+    border: none;
+    margin-top: 30px;
+    font-size: 18px;
+    border-radius: 5px; /* Slightly less rounded */
+    cursor: pointer;
+    color: #fff;
+    transition: 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Shadow for button depth */
+}
+
+.btnn:hover {
+    background: linear-gradient(135deg, #0066CC, #00AFFF); /* Darker gradient on hover */
+}
+
+.btnn a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form .link {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px; /* Slightly smaller font */
+    padding-top: 20px;
+    text-align: center;
+    color: #ccc; /* Softer link color */
+}
+
+.form .link a {
+    text-decoration: none;
+    color: #3399FF;
+}
+
+.form a{
+    color:#00AFFF;
+    text-decoration: none;
+}
+
+.form button{
+    background-color: #00AFFF;
+    color:white;
+    font-size: large;
+    padding: 5px;
+    margin-top: 10px;
+    margin-left: 130px;
+    border-radius: 10px;
+}
+
+.icons ion-icon {
+    color: #3399FF; /* Match icon color with primary theme */
+    font-size: 28px; /* Slightly smaller icons */
+    padding: 8px; /* Adjust padding for better alignment */
+    transition: 0.3s ease;
+}
+
+.icons ion-icon:hover {
+    color: #00CCFF; /* Brighter color on hover */
+}
+
+
+.liw {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.icons a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.icons ion-icon {
+    color: #fff;
+    font-size: 30px;
+    padding-left: 14px;
+    padding-top: 5px;
+    transition: 0.3s ease;
+}
+
+.icons ion-icon:hover {
+    color: #3399FF;
+}
+
+.iconss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.iconss a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.iconss ion-icon {
+    font-size: 24px;
+}
+
+.car {
+    position: relative;
+    display: inline-block;
+    flex: 1 1 30%;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.car-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.car img {
+    width: 85%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+footer {
+    background-color: #124c83;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-content .icons {
+    margin-bottom: 10px;
+}
+
+.footer-content .icons a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.footer-content p {
+    margin: 5px 0;
+}
+
+.booking-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.booking-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.booking-form button {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3399FF;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.booking-form button:hover {
+    background-color: #0066CC;
+}
+
+.booking-form .form-close {
+    background-color: #ff4d4d;
+    float: right;
+    margin-bottom: 20px;
+}
+
+.booking-form .form-close:hover {
+    background-color: #e60000;
+}
+
+.booking-form .decrement,
+.booking-form .increment {
+    width: 30px;
+    height: 30px;
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.booking-form .decrement:hover,
+.booking-form .increment:hover {
+    background-color: #ccc;
+}
+
+.booking-form .number-of-cars {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.booking-form .price-details,
+.booking-form .payment-details,
+.booking-form .bank-details {
+    margin-bottom: 20px;
+}
+
+.booking-form .price-details p,
+.booking-form .payment-details p {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.booking-form .payment-details label {
+    margin-right: 15px;
+}
+
+.booking-form .bank-details.hidden {
+    display: none;
+}
+
+.confirm-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3399FF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.confirm-button:hover {
+    background-color: #0066CC;
+}

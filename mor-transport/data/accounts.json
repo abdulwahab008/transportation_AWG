@@ -1,0 +1,18 @@
+[
+    {
+        "_id": "1",
+        "mobileNumber": "+966012345678",
+        "email": "example@example.com",
+        "name": "John Doe",
+        "username": "johndoe"
+		"password": "bilal"
+    },
+    {
+        "_id": "2",
+        "mobileNumber": "+966987654321",
+        "email": "another@example.com",
+        "name": "Jane Smith",
+        "username": "janesmith"
+		"password": "bial"
+    }
+]

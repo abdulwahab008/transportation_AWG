@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Vehicles</title>
+    <link rel="stylesheet" href="static/userdashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <style>
+        .vehicle-options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .vehicle-option {
+            width: 40%;
+            text-align: center;
+        }
+        .vehicle-option img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="static/images/Screenshot 2024-08-15 214832.png" alt="MOR TRANSPORT Logo">
+        </div>
+        <div class="profile-menu">
+            <img src="static/images/profile.png" alt="Profile Picture" class="profile-pic">
+            <div class="dropdown">
+                <ul>
+                 
+                    <li><a href="./account.html">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <h2>Manage Vehicles</h2>
+        <div class="vehicle-options">
+            <div class="vehicle-option">
+                <img src="static/images/210-2102200_add-car-small-game-icon-png-transparent-png.png" alt="Add Vehicle">
+                <button class="box-button" onclick="window.location.href='vehicle.html'">Add Vehicle</button>
+            </div>
+            <div class="vehicle-option">
+                <img src="static/images/images.png" alt="Check Vehicles">
+                <button class="box-button" onclick="window.location.href='booking.html'">Check Vehicles</button>
+            </div>
+            
+        </div>
+        <br><button class="box" onclick="window.location.href='ownerdashboard.html'">Back</button>
+    </div>
+</body>
+</html>

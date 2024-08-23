@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 130%;
+    width: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.booking-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px;
+    max-width: 90%; /* Changed from 120% to 90% for better fit */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.booking-form h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.booking-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.booking-form .number-of-cars-container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */ /* This line is commented out */
+}
+
+.booking-form .number-of-cars-container button {
+    width: 30px;
+    height: 30px;
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.booking-form .number-of-cars-container button:hover {
+    background-color: #ccc;
+}
+
+.booking-form .number-of-cars {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+.booking-form button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #143f16;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.booking-form button:hover {
+    background-color: #0d2e0f; /* Slightly darker green */
+}
+
+.booking-form .form-close {
+    background-color: #ff4d4d;
+    float: right;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.booking-form .form-close:hover {
+    background-color: #e60000;
+}
+
+.booking-form .price-details,
+.booking-form .payment-details,
+.booking-form .bank-details {
+    margin-bottom: 20px;
+}
+
+.booking-form .price-details p,
+.booking-form .payment-details p {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.booking-form .payment-details label {
+    margin-left: 90px;
+    float: left;
+}
+
+.booking-form .bank-details.hidden {
+    display: none;
+}
+
+.confirm-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #143f16;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.confirm-button:hover {
+    background-color: #0d2e0f; /* Slightly darker green */
+}

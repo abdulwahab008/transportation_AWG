@@ -1,0 +1,20 @@
+[
+    {
+        "_id": "1",
+        "paymentID": "P001",
+        "accountID": "1",
+        "amount": 500,
+        "status": "Completed",
+        "paymentMethod": "Bank Transfer",
+        "accountNumber": "SA1234567890"
+    },
+    {
+        "_id": "2",
+        "paymentID": "P002",
+        "accountID": "2",
+        "amount": 600,
+        "status": "Pending",
+        "paymentMethod": "Cash",
+        "accountNumber": null
+    }
+]

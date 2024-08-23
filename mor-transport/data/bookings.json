@@ -1,0 +1,18 @@
+[
+    {
+        "_id": "1",
+        "bookingID": "B001",
+        "user": "John Doe",
+        "car": "Toyota",
+        "date": "2024-08-01",
+        "price": 500
+    },
+    {
+        "_id": "2",
+        "bookingID": "B002",
+        "user": "Jane Smith",
+        "car": "Honda",
+        "date": "2024-08-02",
+        "price": 600
+    }
+]

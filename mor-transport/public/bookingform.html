@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MOR-BOOKING</title>
+        <link rel="stylesheet" href="static/bookingform.css">
+    </head>
+    <body>
+    <div class="form-overlay">
+        <div class="booking-form">
+            <button class="form-close">X</button>
+            <h3>Booking Details</h3>
+            <div class="booking-details">
+                <label for="vehicle-name">Vehicle Name:</label>
+                <input type="text" class="vehicle-name" readonly>
+            </div>
+            <div class="booking-details">
+                <label for="vehicle-price">Price per Day:</label>
+                <input type="text" class="vehicle-price" readonly>
+            </div>
+            <div class="booking-details">
+                <label for="name">Name:</label>
+                <input type="text" class="name-input" placeholder="Enter your Name here">
+            </div>
+            <div class="booking-details">
+                <label for="email">Email ID:</label>
+                <input type="email" class="email-input" placeholder="Enter your Email Address here">
+            </div>
+            <div class="booking-details">
+                <label for="number-of-cars">Number of Cars:</label>
+                <div class="number-of-cars-container">
+                    <button class="decrement">-</button>
+                    <input type="text" class="number-of-cars" value="1" readonly>
+                    <button class="increment">+</button>
+                </div>
+            </div>
+            <div class="trip-details">
+                <label for="from">From:</label>
+                <select class="from">
+                    <option value="Riyadh">Riyadh</option>
+                    <option value="Jeddah">Jeddah</option>
+                    <option value="Dammam">Dammam</option>
+                    <option value="Mecca">Mecca</option>
+                    <option value="Tabbuk">Tabbuk</option>
+                    <option value="Najran">Najran</option>
+                    <option value="Buraydah">Buraydah</option>
+                    <option value="Madinah">Madinah</option>
+                    <option value="Al-kharj">Al-kharj</option>
+                </select>
+                <label for="to">To:</label>
+                <select class="to">
+                    <option value="Riyadh">Riyadh</option>
+                    <option value="Jeddah">Jeddah</option>
+                    <option value="Dammam">Dammam</option>
+                    <option value="Mecca">Mecca</option>
+                    <option value="Tabbuk">Tabbuk</option>
+                    <option value="Najran">Najran</option>
+                    <option value="Buraydah">Buraydah</option>
+                    <option value="Madinah">Madinah</option>
+                    <option value="Al-kharj">Al-kharj</option>
+                </select>
+            </div>
+            <div class="booking-details">
+                <label for="days">Number of Days:</label>
+                <input type="number" class="days" value="1" min="1">
+            </div>
+            <div class="booking-details">
+                <label for="date">Select Date:</label>
+                <input type="date" class="date-input">
+            </div>
+            <div class="price-details">
+                <p>Ride Price: <span class="ride-price">0.0</span> SAR</p>
+                <p>Total Price: <span class="total-price">0.0</span> SAR</p>
+            </div>
+            <div class="payment-details">
+                <p>Payment Options:</p>
+                <label><input type="radio" name="payment-method" value="cash"> Cash</label>
+                <label><input type="radio" name="payment-method" value="bank"> Bank Transfer</label><br><br><br>
+            </div>
+            <div class="bank-details hidden">
+                <p>Account Number: <span class="dummy-account">123456789</span></p>
+                <label for="transfer-amount">Transfer Amount:</label>
+                <input type="text" class="transfer-amount">
+                <label for="payment-screenshot">Payment Screenshot:</label>
+                <input type="file" class="payment-screenshot">
+                <button class="transfer-button">Transfer</button>
+            </div>
+            <button class="confirm-button">Confirm Booking</button>
+        </div>
+    </div>
+<script src="./scripts/bookings.js"></script>
+</body>
+</html>

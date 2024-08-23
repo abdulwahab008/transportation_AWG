@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MOR-User Dashboard</title>
+    
+    <link rel="stylesheet" href="static/try.css">
+    
+        
+       
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+            <div class="icon">
+                <h2 class="logo">MOR TRANSPORT</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="home.html" class="nav-link">HOME</a></li>
+                    <li><a href="about.html" class="nav-link">ABOUT</a></li>
+                    <!-- <li><a href="booking.html" class="nav-link">BOOKING</a></li> -->
+                    <li><a href="contact.html" class="nav-link">CONTACT</a></li>
+                    <li><a href="comment.html" class="nav-link">COMMENTS</a></li>
+                    <li><a href="user.html" class="nav-link active">MY ACCOUNT</a></li>
+                </ul>
+            </div>
+        </div>
+        <br><br>
+        <h6 class="logo">User Dashboard</h6>
+        <div class="navbars">
+            <a href="#booking-details" class="nav-link" data-section="booking-details">Booking Details</a>
+            <a href="#payment-status" class="nav-link" data-section="payment-status">Payment Status</a>
+            <a href="#contract-terms" class="nav-link" data-section="contract-terms">Contract Terms</a>
+        </div>
+        <div class="content">
+            <div id="dashboard-content">
+                <!-- Booking Details Section -->
+                <div id="booking-details" class="dashboard-section hidden">
+                    <h2 style="font-style: italic; font-family: cursive;">Booking Details</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Car</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Date</th>
+                                <th>Number of Days</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booking-table-body">
+                            <!-- Booking data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Payment Status Section -->
+                <div id="payment-status" class="dashboard-section hidden">
+                    <h2 style="font-style: italic; font-family: cursive;">Payment Status</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payment-status-body">
+                            <!-- Payment status data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Contract Terms Section -->
+                <div id="contract-terms" class="dashboard-section hidden">
+				<h2 style="font-style: italic; font-family: cursive;">MOR Transport Contract<h2><br>
+                    <h3 style="font-style: italic;font-family: cursive;">Contract Terms and Conditions</h3><br>
+                    <p style="font-style: italic;font-family: cursive;">
+This contract was concluded between the contracting parties based on Article (39) of the thirty-ninth of the regulations governing the activity of specialized transportation, renting and directing buses, and based on Paragraph (A) of Article (39), which stipulates that the carrier must conclude a transportation contract with the specified parties. In Article 40, before carrying out transport operations on land roads, without contradicting the provisions of this regulation, and in accordance with the mechanism determined by the Transport Authority, and based on the above, a transport contract was concluded between the following routes:
+The first party: Road Mayor Corporation for Specialized Transport, S.T. 4030397596, license number 00002419/35
+Second Party: 
+The two parties agreed that the first party would carry out the transportation process for the second party with his companions and their families from the location previously specified with the second party and deliver them to the destination specified in the contract.
+Transportation from Jeddah Airport to Medina
+In the event of canceling the contract for a personal reason or other reasons related to reservations or regulations, the cancellation and replacement policy will be:
+According to the Saudi Ministry of Commerce system, if the reservation is canceled more than 24 hours before the trip, the full amount will be refunded.
+In the event that the second party requests a reservation through the organization’s website, this reservation and approval of the terms and conditions on the website is considered an approval of this contract to carry out the transportation process agreed upon with the first party using the organization’s licensed buses that comply with the requirements set by the Transport Authority.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/user_dashboard.js"></script>
+	<script src="scripts/user_action.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+</body>
+<footer>
+    <div class="footer-content">
+        <div class="icons">
+            <a href="https://facebook.com/awanalzahoortransport"><ion-icon name="logo-facebook"></ion-icon></a>
+            <a href="https://instagram.com/awanalzahoortransport"><ion-icon name="logo-instagram"></ion-icon></a>
+            <a href="https://twitter.com/awanalzahoor"><ion-icon name="logo-twitter"></ion-icon></a>
+            <a href="mortransportation77@gmail.com"><ion-icon name="logo-google"></ion-icon></a>
+            <a href="https://skype.com/awanalzahoor"><ion-icon name="logo-skype"></ion-icon></a>
+            <a href="https://wa.me/00966537802514"><ion-icon name="logo-whatsapp"></ion-icon></a>
+        </div>
+        <p>For inquiries, please call us at <a href="tel:+966537802514">+966537802514</a>.</p>
+    </div>
+</footer>
+</html>
