@@ -16,7 +16,7 @@
             <img src="static/images/profile.png" alt="Profile Picture" class="profile-pic">
             <div class="dropdown">
                 <ul>
-                    <li><a href="#">Change Password</a></li>
+                  
                     <li><a href="./account.html">Logout</a></li>
                 </ul>
             </div>
@@ -50,7 +50,7 @@
             <h2>Your Bookings</h2>
             <input type="date" id="date-filter" placeholder="Filter by date">
             <div id="booking-data" class="booking-list">
-                <!-- Booking boxes will be dynamically inserted here -->
+              
             </div>
         </div>
     </div>
@@ -66,12 +66,12 @@
     
         document.getElementById('your-bookings').addEventListener('click', function() {
             document.getElementById('booking-section').style.display = 'block';
-            // Fetch and display bookings when this section is shown
+       
             fetchBookings();
         });
     
         function fetchBookings() {
-            // Retrieve the user_id from localStorage (you need to set this during login)
+           
             const userId = localStorage.getItem('userId');
             
             if (!userId) {
@@ -101,6 +101,8 @@
                             <p><span>Days:</span> ${booking.number_of_days}</p>
                             <p><span>Date:</span> ${new Date(booking.trip_date).toLocaleString()}</p>
                             <p><span>Payment Method:</span> ${booking.payment_method}</p>
+                             <p><span>transfer Amount:</span> ${booking.transfer_amount}</p>
+                            <p><span>ScreenShot:</span> ${booking.payment_screenshot}</p>
                         `;
     
                         bookingList.appendChild(box);

@@ -3,9 +3,9 @@ const mysql = require('mysql2/promise');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const cors = require('cors');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 
 
 const app = express(); // Initialize app before using it
@@ -30,7 +30,25 @@ const dbConfig = {
 // Create MySQL connection pool
 const pool = mysql.createPool(dbConfig);
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'uploads/');  // Make sure this directory exists
+  },
+  filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
 
+const upload = multer({ storage: storage });
+
+// Define the /api/upload route
+app.post('/api/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  res.status(200).json({ filePath: `/uploads/${req.file.filename}` });
+});
 
 app.post('/api/auth/signup', async (req, res) => {
     const { username, email, password } = req.body;
@@ -89,6 +107,7 @@ app.post('/api/auth/signup', async (req, res) => {
 
 
 
+
   app.post('/api/auth/ownersignup', async (req, res) => {
     const { username, email, password } = req.body;
   
@@ -143,25 +162,31 @@ app.post('/api/auth/signup', async (req, res) => {
     }
   });
  
-  app.get('/api/test', (req, res) => {
-    res.json({ message: 'Server is running correctly' });
-  });
+
 
   app.post('/api/bookings', async (req, res) => {
     console.log('Received booking request:', req.body);
-    const { name, email, vehicleName, vehiclePrice, numberOfCars, from, to, days, date, paymentMethod, userId } = req.body;
+    const { name, email, vehicleName, vehiclePrice, numberOfCars, from, to, days, date, paymentMethod, userId, transferAmount, paymentScreenshot } = req.body;
 
     try {
-        const [result] = await pool.execute(
-          'INSERT INTO bookings (name, email, vehicle_name, vehicle_price, number_of_cars, trip_from, trip_to, number_of_days, trip_date, payment_method, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [name, email, vehicleName, vehiclePrice, numberOfCars, from, to, days, date, paymentMethod, userId]
-        );
+        let query = 'INSERT INTO bookings (name, email, vehicle_name, vehicle_price, number_of_cars, trip_from, trip_to, number_of_days, trip_date, payment_method, user_id';
+        let values = [name, email, vehicleName, vehiclePrice, numberOfCars, from, to, days, date, paymentMethod, userId];
+        
+        if (paymentMethod === 'bank') {  // Adjusted to match "bank" from frontend
+            query += ', transfer_amount, payment_screenshot) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            values.push(transferAmount, paymentScreenshot);
+        } else {
+            query += ') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        }
+
+        const [result] = await pool.execute(query, values);
         res.status(201).json({ message: 'Booking successful', bookingId: result.insertId });
     } catch (error) {
         console.error('Booking error:', error);
         res.status(500).json({ message: 'An error occurred while booking' });
     }
 });
+
 
 
 app.get('/api/bookings', async (req, res) => {

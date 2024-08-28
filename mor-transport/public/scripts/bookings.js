@@ -17,7 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const formCloseBtn = document.querySelector('.form-close');
     const dateInput = document.querySelector('.date-input');
     const confirmButton = document.querySelector('.confirm-button');
-
+ 
+    const token = localStorage.getItem('token');
+     if (!token) {
+        window.location.href = "/login.html"; // Redirect to login if not authenticated
+    }
     // Constants
     const basePricePerCar = parseFloat(vehiclePrice);
 
@@ -66,27 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.form-overlay').style.display = 'none';
     });
 
-    async function testServerConnectivity() {
-        try {
-            console.log('Attempting to connect to server...');
-            const response = await fetch('http://localhost:4000/api/test');
-            console.log('Server response:', response);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            console.log('Server test successful:', data.message);
-            return true;
-        } catch (error) {
-            console.error('Server test failed:', error);
-            return false;
-        }
-    }
-    
     async function makeBooking(bookingData) {
         try {
             console.log('Sending booking data:', bookingData);
-            const response = await fetch('http://localhost:4000/api/bookings', {
+            const response = await fetch('/api/bookings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -112,11 +99,25 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         console.log('Confirm button clicked');
 
-        // Test server connectivity first
-        const isServerConnected = await testServerConnectivity();
-        if (!isServerConnected) {
-            alert('Unable to connect to the server. Please try again later.');
-            return;
+        const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+        let transferAmount = null;
+        let paymentScreenshot = null;
+
+        if (paymentMethod === 'bank') {
+            transferAmount = document.querySelector('.transfer-amount').value;
+            const paymentScreenshotFile = document.querySelector('.payment-screenshot').files[0];
+
+            if (paymentScreenshotFile) {
+                const formData = new FormData();
+                formData.append('file', paymentScreenshotFile);
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                paymentScreenshot = data.filePath;
+            }
         }
 
         const bookingData = {
@@ -129,7 +130,9 @@ document.addEventListener('DOMContentLoaded', function() {
             to: document.querySelector('.to').value,
             days: parseInt(document.querySelector('.days').value, 10),
             date: document.querySelector('.date-input').value,
-            paymentMethod: document.querySelector('input[name="payment-method"]:checked').value,
+            paymentMethod: paymentMethod,
+            transferAmount: transferAmount,
+            paymentScreenshot: paymentScreenshot,
             userId: getUserId()
         };
 
@@ -140,14 +143,16 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Booking failed: ' + error.message);
         }
     });
+
     function getUserId() {
         return localStorage.getItem('userId'); // Example: retrieving from localStorage
     }
+
     formCloseBtn.addEventListener('click', () => {
         console.log('Close button clicked');
         window.location.href = 'booking.html'; // Redirect to booking.html
     });
-    
 
     calculateTotalPrice();
+    
 });
