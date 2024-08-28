@@ -5,7 +5,7 @@
 }
 
 html, body {
-    height: 130%;
+    height:130%;
     width: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -16,11 +16,12 @@ html, body {
 }
 
 .booking-form {
+    margin-top: 220px;
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
     width: 500px;
-    max-width: 90%; /* Changed from 120% to 90% for better fit */
+    max-width: 90%; 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
@@ -138,5 +139,12 @@ html, body {
 }
 
 .confirm-button:hover {
-    background-color: #0d2e0f; /* Slightly darker green */
+    background-color: #0d2e0f; 
+}
+
+
+.bank-message{
+color:red;
+
+
 }

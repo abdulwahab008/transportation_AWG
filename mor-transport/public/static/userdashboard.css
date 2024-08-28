@@ -164,7 +164,7 @@ h2 {
     color: #1e88e5;
 }
 
-/* Date Filter Styling */
+
 input[type="date"] {
     padding: 10px;
     margin-bottom: 20px;
@@ -221,5 +221,6 @@ input[type="date"]:focus {
     width:100px;
     height: 50px;
     border:none;
-    margin-left: 550px;
+    margin-left: 20px;
+    cursor:pointer;
 }

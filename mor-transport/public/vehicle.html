@@ -134,14 +134,16 @@
                 <input type="file" id="vehicle-image" name="vehicleImage" accept="image/*" required>
             </div>
             <button type="submit">Confirm</button>
+        
         </form>
+       <br><button class="back" onclick="window.location.href='manage_vehicles.html'">Back</button>
         <div id="message"></div>
     </div>
     
     <script>
         document.getElementById('vehicle-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            console.log('Form submitted'); // Debug log
+            console.log('Form submitted');
             alert( 'Vehicle added successfully');
             const formData = new FormData(this);
             window.location.reload();
@@ -150,19 +152,19 @@
                 body: formData
             })
             .then(response => {
-                console.log('Response status:', response.status); // Debug log
+                console.log('Response status:', response.status); 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data); // Debug log
+                console.log('Success:', data);
                 showMessage(data.message || 'Vehicle added successfully', 'success');
-                this.reset(); // Reset the form after successful submission
+                this.reset(); 
             })
             .catch(error => {
-                console.error('Error:', error); // This will show in the browser's console
+                console.error('Error:', error);
                 showMessage('Failed to add vehicle. Please try again.', 'error');
             });
         });
@@ -173,23 +175,23 @@
             messageElement.className = type;
             messageElement.style.display = 'block';
             
-            // Force a reflow to ensure the transition works
+            
             void messageElement.offsetWidth;
             
             messageElement.classList.add('visible');
 
-            console.log(`Showing message: ${message} (${type})`); // Debug log
+            console.log(`Showing message: ${message} (${type})`);
 
             setTimeout(() => {
                 messageElement.classList.remove('visible');
                 setTimeout(() => {
                     messageElement.style.display = 'none';
-                    console.log('Message hidden'); // Debug log
+                    console.log('Message hidden'); 
                 }, 300);
             }, 5000);
         }
 
-        // Additional debugging
+        
         window.onerror = function(message, source, lineno, colno, error) {
             console.error('Global error:', message, 'at', source, lineno, colno, error);
         };

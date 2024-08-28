@@ -208,6 +208,46 @@ app.get('/api/vehicles', async (req, res) => {
     }
 });
 
+app.put('/api/vehicles/:id', async (req, res) => {
+  const { vehicle_price } = req.body; 
+  const vehicleId = req.params.id;
+
+  try {
+    
+      const [existingVehicle] = await pool.execute('SELECT * FROM vehicles WHERE id = ?', [vehicleId]);
+
+      if (existingVehicle.length === 0) {
+          return res.status(404).json({ message: 'Vehicle not found' });
+      }
+
+      const query = 'UPDATE vehicles SET vehicle_price = ? WHERE id = ?';
+      await pool.execute(query, [vehicle_price, vehicleId]);
+
+      res.status(200).json({ message: 'Vehicle updated successfully' });
+  } catch (error) {
+      console.error('Error updating vehicle:', error);
+      res.status(500).json({ message: 'Failed to update vehicle' });
+  }
+});
+
+
+
+app.delete('/api/vehicles/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+      const [result] = await pool.execute('DELETE FROM vehicles WHERE id = ?', [id]);
+
+      if (result.affectedRows === 0) {
+          return res.status(404).json({ message: 'Vehicle not found' });
+      }
+
+      res.status(200).json({ message: 'Vehicle deleted successfully' });
+  } catch (error) {
+      console.error('Error deleting vehicle:', error);
+      res.status(500).json({ message: 'An error occurred while deleting the vehicle' });
+  }
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 

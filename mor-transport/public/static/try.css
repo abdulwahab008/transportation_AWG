@@ -193,7 +193,7 @@ html, body {
 }
 
 .btnn {
-    width: 100%;
+    width: 50%;
     height: 45px; /* Increase height */
     background: linear-gradient(135deg, #3399FF, #33CCFF); /* Gradient button background */
     border: none;
