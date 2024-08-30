@@ -18,7 +18,7 @@ const port = 4000;
 const JWT_SECRET = 'your_jwt_secret'; 
 
 
-// MySQL connection configuration
+
 const dbConfig = {
   host: 'localhost',
   user: 'root',
@@ -27,21 +27,33 @@ const dbConfig = {
   debug: true
 };
 
-// Create MySQL connection pool
+
 const pool = mysql.createPool(dbConfig);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'uploads/');  // Make sure this directory exists
+      cb(null, 'uploads/');  
   },
   filename: function (req, file, cb) {
       cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 
+const bookingStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'uploads/bookings/');  
+  },
+  filename: function (req, file, cb) {
+      cb(null, 'screenshot_' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const uploadBookingScreenshot = multer({ storage: bookingStorage });
+
+
 const upload = multer({ storage: storage });
 
-// Define the /api/upload route
+
 app.post('/api/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
@@ -49,6 +61,15 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 
   res.status(200).json({ filePath: `/uploads/${req.file.filename}` });
 });
+
+app.post('/api/uploadBookingScreenshot', uploadBookingScreenshot.single('bookingScreenshot'), (req, res) => {
+  if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  res.status(200).json({ filePath: `/uploads/bookings/${req.file.filename}` });
+});
+
 
 app.post('/api/auth/signup', async (req, res) => {
     const { username, email, password } = req.body;
@@ -97,7 +118,7 @@ app.post('/api/auth/signup', async (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, userId: user.id }); // Return both token and userId
+        res.json({ token, userId: user.id }); 
 
     } catch (error) {
         console.error('Login error:', error);
@@ -165,14 +186,13 @@ app.post('/api/auth/signup', async (req, res) => {
 
 
   app.post('/api/bookings', async (req, res) => {
-    console.log('Received booking request:', req.body);
     const { name, email, vehicleName, vehiclePrice, numberOfCars, from, to, days, date, paymentMethod, userId, transferAmount, paymentScreenshot } = req.body;
 
     try {
         let query = 'INSERT INTO bookings (name, email, vehicle_name, vehicle_price, number_of_cars, trip_from, trip_to, number_of_days, trip_date, payment_method, user_id';
         let values = [name, email, vehicleName, vehiclePrice, numberOfCars, from, to, days, date, paymentMethod, userId];
         
-        if (paymentMethod === 'bank') {  // Adjusted to match "bank" from frontend
+        if (paymentMethod === 'bank') {  
             query += ', transfer_amount, payment_screenshot) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
             values.push(transferAmount, paymentScreenshot);
         } else {
@@ -186,6 +206,7 @@ app.post('/api/auth/signup', async (req, res) => {
         res.status(500).json({ message: 'An error occurred while booking' });
     }
 });
+
 
 
 
@@ -208,6 +229,7 @@ app.get('/api/bookings', async (req, res) => {
   }
 });
 
+
 app.post('/api/vehicles', upload.single('vehicleImage'), (req, res) => {
   const { vehicleName, vehiclePrice } = req.body;
   const vehicleImage = req.file ? req.file.filename : null;
@@ -218,7 +240,7 @@ app.post('/api/vehicles', upload.single('vehicleImage'), (req, res) => {
       console.error('Error inserting vehicle:', err);
       res.status(500).json({ error: 'Failed to add vehicle' });
     } else {
-      console.log('Vehicle added successfully'); // Add this line
+      console.log('Vehicle added successfully'); 
       res.status(201).json({ message: 'Vehicle added successfully' });
     }
   });
@@ -313,7 +335,7 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
-// Start the server
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

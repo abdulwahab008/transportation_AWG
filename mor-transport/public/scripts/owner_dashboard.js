@@ -1,46 +1,27 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const bookingList = document.getElementById('booking-data');
-    const today = new Date();
+document.getElementById('book-vehicle').addEventListener('click', function() {
+    window.location.href = 'manage_vehicles.html';
+});
 
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-        return date.toLocaleDateString('en-US', options);
-    }
+document.getElementById('enter-complaints').addEventListener('click', function() {
+    window.location.href = 'comment.html';
+});
 
-    function handleEditBooking(bookingId) {
-        // Logic to edit booking (e.g., open a modal with the booking details)
-        console.log('Editing booking:', bookingId);
-    }
+document.getElementById('your-bookings').addEventListener('click', function() {
+    document.getElementById('booking-section').style.display = 'block';
+    
+    fetchBookings();
+});
 
-    function handleDeleteBooking(bookingId) {
-        fetch(`/api/bookings/${bookingId}`, {
-            method: 'DELETE',
-        })
-        .then(response => {
-            if (response.ok) {
-                document.getElementById(`booking-${bookingId}`).remove();
-                console.log('Booking deleted:', bookingId);
-            } else {
-                console.error('Failed to delete booking:', bookingId);
-            }
-        })
-        .catch(error => {
-            console.error('Error deleting booking:', error);
-        });
-    }
+function fetchBookings() {
+    fetch('/api/bookings')
+        .then(response => response.json())
+        .then(data => {
+            const bookingList = document.getElementById('booking-data');
+            bookingList.innerHTML = ''; 
 
-    function filterBookings(bookings, selectedDate = null) {
-        bookingList.innerHTML = ''; 
-        bookings.forEach(booking => {
-            const bookingDate = new Date(booking.trip_date);
-            const timeDifference = today - bookingDate;
-            const daysDifference = timeDifference / (1000 * 3600 * 24);
-
-            if ((daysDifference <= 7 && !selectedDate) || (selectedDate && bookingDate.toDateString() === selectedDate.toDateString())) {
+            data.forEach(booking => {
                 const box = document.createElement('div');
                 box.className = 'booking-box';
-                box.id = `booking-${booking.id}`;
 
                 box.innerHTML = `
                     <h3>Booking ID: ${booking.id}</h3>
@@ -52,32 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p><span>From:</span> ${booking.trip_from}</p>
                     <p><span>To:</span> ${booking.trip_to}</p>
                     <p><span>Days:</span> ${booking.number_of_days}</p>
-                    <p><span>Date:</span> ${formatDate(booking.trip_date)}</p>
+                    <p><span>Date:</span> ${new Date(booking.trip_date).toLocaleString()}</p>
                     <p><span>Payment Method:</span> ${booking.payment_method}</p>
-                    <button class="edit-btn" onclick="handleEditBooking(${booking.id})">Edit</button>
-                    <button class="delete-btn" onclick="handleDeleteBooking(${booking.id})">Delete</button>
+                    ${booking.payment_method === 'bank' ? `
+                        <p><span>Transfer Amount:</span> ${booking.transfer_amount}</p>
+                        <p><span>Screenshot:</span><img src="/uploads/bookings/{{payment_screenshot}}" alt="Payment Screenshot">
+</p>
+                    ` : ''}
                 `;
 
                 bookingList.appendChild(box);
-            }
-        });
-    }
-
-    fetch('/api/bookings')
-        .then(response => response.json())
-        .then(data => {
-            filterBookings(data); 
-
-            const dateFilter = document.createElement('input');
-            dateFilter.type = 'date';
-            dateFilter.addEventListener('change', (e) => {
-                const selectedDate = new Date(e.target.value);
-                filterBookings(data, selectedDate);
             });
-
-            bookingList.before(dateFilter); 
         })
-        .catch(error => {
-            console.error('Error fetching booking data:', error);
-        });
-});
+        .catch(error => console.error('Error fetching bookings:', error));
+}

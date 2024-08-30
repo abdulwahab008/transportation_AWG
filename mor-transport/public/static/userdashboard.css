@@ -224,3 +224,18 @@ input[type="date"]:focus {
     margin-left: 20px;
     cursor:pointer;
 }
+
+.vehicle-options {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+.vehicle-option {
+    width: 40%;
+    text-align: center;
+}
+.vehicle-option img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
