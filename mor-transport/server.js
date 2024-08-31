@@ -20,7 +20,7 @@ const JWT_SECRET = 'your_jwt_secret';
 
 
 const dbConfig = {
-  host: 'localhost',
+  host: 'www.mrmobileonline.com',
   user: 'root',
   password: 'Punjab123',
   database: 'testing',
