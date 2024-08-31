@@ -25,9 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.textContent = `Price: ${vehicle.vehicle_price} SAR/day`;
 
                 const button = document.createElement('button');
-                button.dataset.car = vehicle.vehicle_name;
-                button.dataset.price = vehicle.vehicle_price;
-
+                
                 const link = document.createElement('a');
                 link.href = `bookingform.html?car=${encodeURIComponent(vehicle.vehicle_name)}&price=${vehicle.vehicle_price}`;
                 link.textContent = 'Book';

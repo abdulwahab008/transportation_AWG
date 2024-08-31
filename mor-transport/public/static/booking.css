@@ -6,7 +6,7 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom, #3a7bd5, #3a6073);
     color: #333;
 }
@@ -20,16 +20,20 @@ body {
     border-radius: 15px;
 }
 
-/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px 20px;
+    background: rgba(15, 28, 47, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #00aaff; 
+    position: fixed;
+    width: 98%;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: slideDown 0.5s ease-out; 
 }
 
 .navbar img {
@@ -44,6 +48,7 @@ body {
 }
 
 .menu ul li a {
+    font-style: normal;
     color: #ffffff;
     text-decoration: none;
     font-size: 16px;
@@ -55,19 +60,19 @@ body {
 .menu ul li a:hover, .menu ul li a.active {
     background-color: rgba(255, 255, 255, 0.3);
 }
-.navbar a{
-    text-decoration: none;
-    color:white;
-}
 
 
 .content {
+    margin-top: 200px;
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
 }
 
 h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    margin-top: 100px;
     color: #ffffff;
     font-size: 48px;
     margin-bottom: 20px;
@@ -76,13 +81,15 @@ h1 {
 }
 
 .par {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
     color: #ffffff;
     font-size: 20px;
     margin-bottom: 40px;
     font-weight: 300;
 }
 
-/* Car container */
+
 .car-container {
     display: flex;
     flex-wrap: wrap;
@@ -90,7 +97,7 @@ h1 {
     gap: 20px;
 }
 
-/* Car selection box */
+
 .car-selection {
     background-color: #ffffff;
     border-radius: 10px;
@@ -115,6 +122,8 @@ h1 {
 .car h2 {
     font-size: 24px;
     margin: 15px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
 }
 
 /* Services section */
@@ -130,6 +139,8 @@ h1 {
     font-size: 36px;
     margin-bottom: 30px;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
 }
 
 .services-container {
@@ -153,11 +164,15 @@ h1 {
     font-size: 24px;
     margin-bottom: 10px;
     color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
 }
 
 .service p {
     font-size: 16px;
     color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
 }
 
 /* Testimonials section */
@@ -237,46 +252,80 @@ h1 {
     background-color: #f0f0f0;
 }
 
-/* Footer */
 footer {
-    background-color: #333;
-    color: #ffffff;
-    padding: 20px 0;
-    margin-top: 40px;
+    background: linear-gradient(45deg, #0a0a0a, #1f1f1f);
+    color: #e0e0e0;
+    padding: 30px 0;
+    margin-top: 50px;
     text-align: center;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.7);
+    border-top: 2px solid #00ffff;
+    position: relative;
 }
 
-.footer-content p {
-    font-size: 14px;
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeInUp 1.2s ease;
 }
 
-.footer-content a {
-    color: #3a7bd5;
-    text-decoration: none;
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .icons a {
-    color: #ffffff;
-    font-size: 24px;
-    margin: 0 10px;
-    transition: color 0.3s ease;
+    color: #00ffff;
+    font-size: 30px;
+    transition: transform 0.4s ease, color 0.4s ease;
 }
 
 .icons a:hover {
-    color: #3a7bd5;
+    color: #ffffff;
+    transform: scale(1.3) rotate(15deg);
 }
 
-/* Responsive design */
+footer p {
+    font-size: 18px;
+    margin-top: 15px;
+    line-height: 1.6;
+    font-weight: 300;
+    color: #bbbbbb;
+}
+
+footer a {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 5px #00ffff;
+}
 @media (max-width: 768px) {
     .menu ul {
-        flex-direction: column;
+        flex-direction: colum;
         gap: 10px;
     }
+   .car-container{
+    flex-direction: column; /* Change to column for vertical layout */
+        width: 100%;
+   }
 
     .car-selection,
     .service,
     .testimonial {
         width: calc(50% - 20px);
+     
+    }
+
+    .car-info button,
+    .car-info button a {
+        width: 100%; /* Ensure full width on smaller screens */
     }
 }
 
@@ -286,15 +335,22 @@ footer {
     .testimonial {
         width: 100%;
     }
+
+    .car-container{
+        flex-direction: column;
+    }
 }
+
+
 .car-info button {
     background-color: #3a7bd5;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 0; /* Remove padding from button */
     margin-top: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 100%; /* Make button full width */
 }
 
 .car-info button:hover {
@@ -306,9 +362,13 @@ footer {
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
+    display: block; 
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box; 
 }
 
-
+/* Update car-selection styles */
 .car-selection {
     background-color: #ffffff;
     border-radius: 10px;
@@ -339,4 +399,9 @@ footer {
     font-size: 16px;
     color: #666;
     margin-bottom: 15px;
+}
+
+.main a{
+    text-decoration: none;
+    color:#f0f4f8;
 }

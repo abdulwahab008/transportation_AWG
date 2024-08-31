@@ -10,20 +10,29 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1e88e5;
-    padding: 10px 20px;
-    color: #fff;
+    padding: 20px 20px;
+    background: rgba(15, 28, 47, 0.8);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #00aaff;
+    position: fixed;
+    width: 96%;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: slideDown 0.5s ease-out;
 }
 
 .navbar .logo h2 {
     margin: 0;
     font-size: 1.5em;
 }
-.navbar img{
+
+.navbar img {
     font-size: large;
     width: 70px;
     height: 70px;
 }
+
 .navbar .profile-menu {
     position: relative;
     display: flex;
@@ -73,8 +82,9 @@ body {
 }
 
 .dashboard-container {
+    margin-top: 200px;
     max-width: 1200px;
-    margin: 20px auto;
+    margin-left: 10%;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -92,15 +102,18 @@ h2 {
     display: flex;
     justify-content: space-around;
     margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
 .dashboard-box {
     background-color: #f9f9f9;
     border-radius: 8px;
     padding: 20px;
-    width: 30%;
+    width: 100%;
+    max-width: 300px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .dashboard-box:hover {
@@ -111,7 +124,7 @@ h2 {
     width: 100%;
     padding: 15px;
     font-size: 1.2em;
-    background-color: #1e88e5;
+    background-color: #254277;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -123,10 +136,9 @@ h2 {
     background-color: #1565c0;
 }
 
-/* Booking Section Styling */
 .booking-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
@@ -164,7 +176,6 @@ h2 {
     color: #1e88e5;
 }
 
-
 input[type="date"] {
     padding: 10px;
     margin-bottom: 20px;
@@ -182,13 +193,10 @@ input[type="date"]:focus {
     outline: none;
 }
 
-
-.box-button img{
+.box-button img {
     width: 50%;
     height: 50%;
 }
-
-
 
 .dropdown-container a {
     color: black;
@@ -205,37 +213,79 @@ input[type="date"]:focus {
     position: relative;
 }
 
-
 .dropdown-container {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
-.box{
+.box {
     border-radius: 10px;
     background-color: #1e88e5;
-    color:#f1f1f1;
-    width:100px;
+    color: #f1f1f1;
+    width: 100px;
     height: 50px;
-    border:none;
+    border: none;
     margin-left: 20px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .vehicle-options {
     display: flex;
     justify-content: space-around;
     margin-top: 50px;
+    flex-wrap: wrap;
 }
+
 .vehicle-option {
-    width: 40%;
+    width: 100%;
+    max-width: 300px;
     text-align: center;
+    margin-bottom: 20px;
 }
+
 .vehicle-option img {
     width: 150px;
     height: 150px;
     margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .navbar img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .dashboard-boxes {
+        flex-direction: row;
+    }
+
+    .dashboard-box {
+        width: 30%;
+    }
+
+    .vehicle-options {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .vehicle-option {
+        width: 30%;
+    }
+
+    .booking-list {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .dashboard-container {
+        max-width: 1200px;
+    }
+
+    .dashboard-box {
+        width: 30%;
+    }
 }

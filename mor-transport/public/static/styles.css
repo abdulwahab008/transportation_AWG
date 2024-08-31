@@ -1,0 +1,274 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #141e30, #243b55);
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    background: rgba(15, 28, 47, 0.8); /* Slightly more transparent background */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #00aaff; /* Updated color to blue */
+    position: fixed;
+    width: 96%;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Reduced blur */
+    animation: slideDown 0.5s ease-out; /* Shorter animation duration */
+}
+
+.navbar .icon .logo {
+    width: 60px;
+    transition: transform 0.3s ease;
+}
+
+.navbar .logo:hover {
+    transform: scale(1.05);
+}
+
+.menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    margin: 0 15px;
+    position: relative;
+}
+
+.menu ul li a {
+    color: #00aaff; /* Updated color to blue */
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+    
+}
+
+.menu ul li a:hover, .menu ul li a.active {
+    color: #0099cc; /* Slightly darker blue on hover */
+    transform: scale(1);
+}
+
+.main {
+    padding: 100px 20px 50px; /* Adjusted padding to account for fixed navbar */
+    text-align: center;
+    margin-top: 50px;
+}
+
+.content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #00aaff; /* Updated color to blue */
+}
+
+.content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    color: #d3d3d3;
+}
+
+.car-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.car-selection {
+    background-color: #1f2a3e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.car-selection:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.car img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.car h2 {
+    font-size: 22px;
+    color: #00aaff; /* Updated color to blue */
+    margin-bottom: 10px;
+}
+
+.car p {
+    font-size: 16px;
+    color: #d3d3d3;
+}
+
+.services, .cta, .testimonials {
+    padding: 50px 20px;
+    background-color: #0f1c2f;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.services h2, .testimonials h2, .cta h2 {
+    font-size: 36px;
+    color: #00aaff; /* Updated color to blue */
+    margin-bottom: 40px;
+}
+
+.services-container, .testimonial-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.service, .testimonial {
+    background-color: #1f2a3e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* .service:hover, .testimonial:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+} */
+
+.service h3, .testimonial h4 {
+    font-size: 20px;
+    color: #0099cc; /* Slightly darker blue */
+    margin-bottom: 15px;
+}
+
+.service p, .testimonial p {
+    font-size: 16px;
+    color: #d3d3d3;
+}
+
+.cta {
+    position: relative;
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    animation: changeBg 9s infinite;
+}
+
+@keyframes changeBg {
+    0% { background-image: url('images/bmw.png'); }
+    33% { background-image: url('images/darkbackground\ camry.jpg'); }
+    66% { background-image: url('images/hyundai\ background.png'); }
+    100% { background-image: url('images/mercedes.jpg'); }
+}
+
+.cta h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #fbfbfe;
+}
+
+.cta p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #d3d3d3;
+    font-weight: bolder;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #1e90ff;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #00ffff;
+}
+
+.footer-content {
+    padding: 20px;
+    background-color: #0f1c2f;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 40px;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.footer-content .icons {
+    margin-bottom: 20px;
+}
+
+.footer-content .icons a {
+    margin: 0 10px;
+    color: #0099cc; /* Slightly darker blue */
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.footer-content .icons a:hover {
+    color: #00aaff; /* Lighter blue on hover */
+}
+
+footer p {
+    font-size: 16px;
+    color: #d3d3d3;
+}
+
+footer a {
+    color: #00aaff; /* Updated color to blue */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #0099cc; /* Slightly darker blue */
+}
+
+@media (max-width: 768px) {
+    .navbar .menu ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu ul li {
+        margin: 10px 0;
+    }
+
+    .car-selection, .service, .testimonial {
+        width: 100%;
+    }
+}
