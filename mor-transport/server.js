@@ -24,7 +24,11 @@ const dbConfig = {
   user: 'root',
   password: 'Punjab123',
   database: 'testing',
-  debug: true
+  debug: true,
+  connectionLimit: 10, // Set the maximum number of connections in the pool
+  waitForConnections: true, // Wait for connections instead of throwing an error when the pool is full
+  queueLimit: 0, // No limit on the number of queued connection requests
+  connectTimeout: 15000
 };
 
 
