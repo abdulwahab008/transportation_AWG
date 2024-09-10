@@ -20,15 +20,15 @@ const JWT_SECRET = 'your_jwt_secret';
 
 
 const dbConfig = {
-  host: 'localhost',
+  host: '127.0.0.1',
   user: 'deployment',
   password: 'Punjab123',
   database: 'testing',
   debug: true,
-  // connectionLimit: 10, // Set the maximum number of connections in the pool
-  // waitForConnections: true, // Wait for connections instead of throwing an error when the pool is full
-  queueLimit: 0, // No limit on the number of queued connection requests
   connectTimeout: 60000,
+  connectionLimit: 10, // Maximum number of connections
+  waitForConnections: true, // Wait for connections when the pool is full
+  queueLimit: 0, // No limit on queued requests
 };
 
 
