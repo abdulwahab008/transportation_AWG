@@ -16,3 +16,13 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
         alert(result.message || 'Signup failed');
     }
 });
+
+// Toggle password visibility
+const togglePasswordSignup = document.getElementById('togglePasswordSignup');
+const passwordInputSignup = document.getElementById('password');
+
+togglePasswordSignup.addEventListener('click', () => {
+    const type = passwordInputSignup.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInputSignup.setAttribute('type', type);
+    togglePasswordSignup.textContent = type === 'password' ? '👁️' : '🙈'; // Change icon based on visibility
+});

@@ -59,7 +59,7 @@ body {
 }
 
 .main {
-    padding: 100px 20px 50px; /* Adjusted padding to account for fixed navbar */
+    padding: 10px 20px 50px; /* Adjusted padding to account for fixed navbar */
     text-align: center;
     margin-top: 50px;
 }
@@ -124,7 +124,7 @@ body {
 
 .services h2, .testimonials h2, .cta h2 {
     font-size: 36px;
-    color: #00aaff; /* Updated color to blue */
+    color: #00aaff; 
     margin-bottom: 40px;
 }
 
@@ -143,14 +143,11 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* .service:hover, .testimonial:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-} */
+
 
 .service h3, .testimonial h4 {
     font-size: 20px;
-    color: #0099cc; /* Slightly darker blue */
+    color: #0099cc; 
     margin-bottom: 15px;
 }
 

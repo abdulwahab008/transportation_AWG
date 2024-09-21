@@ -3,131 +3,192 @@ const mysql = require('mysql2/promise');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const cors = require('cors');
 const multer = require('multer');
+const cookieParser = require('cookie-parser');
 
+require('dotenv').config();
 
-const app = express(); // Initialize app before using it
+const app = express(); 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 
-
-const port = 4000;
-const JWT_SECRET = 'your_jwt_secret'; 
-
+const port = process.env.PORT || 4000;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 
 const dbConfig = {
-  host: '127.0.0.1',
-  user: 'deployment',
-  password: 'Punjab123',
-  database: 'testing',
-  debug: true,
-  connectTimeout: 60000,
-  connectionLimit: 10, // Maximum number of connections
-  waitForConnections: true, // Wait for connections when the pool is full
-  queueLimit: 0, // No limit on queued requests
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  debug: false,
+  connectionLimit: 10, 
+  waitForConnections: true, 
+  queueLimit: 0, 
+  connectTimeout: 15000
 };
-
 
 const pool = mysql.createPool(dbConfig);
 
+
+
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    return res.status(403).json({ message: 'No token provided' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    req.userId = decoded.id;
+    req.userType = decoded.type;
+    next();
+  });
+};
+
+
+const checkAuth = (req, res, next) => {
+  const token = req.cookies.token;
+  console.log('Token from cookies:', token);
+
+  if (!token) {
+    console.log('No token provided, redirecting to login');
+    return res.redirect('/account.html');
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    console.log('Decoded JWT:', decoded);
+    req.userId = decoded.id;
+    req.userType = decoded.type;
+    next();
+  } catch (error) {
+    console.log('Token verification failed:', error.message);
+    res.clearCookie('token');
+    return res.redirect('/account.html');
+  }
+};
+
+
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'uploads/');  
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-      cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
+
+
 
 const bookingStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'uploads/bookings/');  
+    cb(null, 'uploads/bookings/');
   },
   filename: function (req, file, cb) {
-      cb(null, 'screenshot_' + Date.now() + path.extname(file.originalname));
+    cb(null, 'screenshot_' + Date.now() + path.extname(file.originalname));
   }
 });
 
+
+
+
 const uploadBookingScreenshot = multer({ storage: bookingStorage });
-
-
 const upload = multer({ storage: storage });
-
 
 app.post('/api/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+    return res.status(400).json({ message: 'No file uploaded' });
   }
 
   res.status(200).json({ filePath: `/uploads/${req.file.filename}` });
 });
 
+
+
+
+
 app.post('/api/uploadBookingScreenshot', uploadBookingScreenshot.single('bookingScreenshot'), (req, res) => {
   if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+    return res.status(400).json({ message: 'No file uploaded' });
   }
 
   res.status(200).json({ filePath: `/uploads/bookings/${req.file.filename}` });
 });
 
 
+
+
+
+
 app.post('/api/auth/signup', async (req, res) => {
-    const { username, email, password } = req.body;
-  
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: 'All fields are required' });
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    const [existingUsers] = await pool.execute('SELECT * FROM users WHERE username = ? OR email = ?', [username, email]);
+    if (existingUsers.length > 0) {
+      return res.status(400).json({ message: 'Username or email already exists' });
     }
-  
-    try {
-      const [existingUsers] = await pool.execute('SELECT * FROM users WHERE username = ? OR email = ?', [username, email]);
-      if (existingUsers.length > 0) {
-        return res.status(400).json({ message: 'Username or email already exists' });
-      }
-  
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const [result] = await pool.execute(
-        'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-        [username, email, hashedPassword]
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const [result] = await pool.execute(
+      'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+      [username, email, hashedPassword]
+    );
+    res.status(201).json({ message: 'User created successfully', id: result.insertId });
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({ message: 'An error occurred during signup' });
+  }
+});
+
+
+
+app.post('/api/auth/login', async (req, res) => {
+  const { identifier, password } = req.body; // Change from username to identifier
+
+  if (!identifier || !password) {
+      return res.status(400).json({ message: 'Username/Email and password are required' });
+  }
+
+  try {
+      // Use SQL to check for both username and email
+      const [rows] = await pool.execute(
+          'SELECT * FROM users WHERE username = ? OR email = ?',
+          [identifier, identifier] // Check against both fields
       );
-      res.status(201).json({ message: 'User created successfully', id: result.insertId });
-    } catch (error) {
-      console.error('Signup error:', error);
-      res.status(500).json({ message: 'An error occurred during signup' });
-    }
-  });
-  
-  app.post('/api/auth/login', async (req, res) => {
-    const { username, password } = req.body;
+      const user = rows[0];
 
-    if (!username || !password) {
-        return res.status(400).json({ message: 'Username and password are required' });
-    }
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
 
-    try {
-        const [rows] = await pool.execute('SELECT * FROM users WHERE username = ?', [username]);
-        const user = rows[0];
+      const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+      if (!isMatch) {
+          return res.status(400).json({ message: 'Invalid credentials' });
+      }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-
-        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, userId: user.id }); 
-
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ message: 'An error occurred during login' });
-    }
+      const token = jwt.sign({ id: user.id, type: 'user' }, JWT_SECRET, { expiresIn: '3h' });
+      res.cookie('token', token, { httpOnly: true, maxAge: 3 * 60 * 60 * 1000 }); // 3 hours
+      res.json({ token, userId: user.id });
+  } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ message: 'An error occurred during login' });
+  }
 });
 
 
@@ -158,35 +219,45 @@ app.post('/api/auth/signup', async (req, res) => {
     }
   });
   
+  
+
+
+
+
+
   app.post('/api/auth/ownerlogin', async (req, res) => {
-    const { username, password } = req.body;
-  
-    if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password are required' });
+    const { identifier, password } = req.body; // Change from username to identifier
+
+    if (!identifier || !password) {
+        return res.status(400).json({ message: 'Username/Email and password are required' });
     }
-  
+
     try {
-      const [rows] = await pool.execute('SELECT * FROM owner_account WHERE username = ?', [username]);
-      const user = rows[0];
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      const isMatch = await bcrypt.compare(password, user.password);
-  
-      if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-  
-      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
-      res.json({ token });
+        // Use SQL to check for both username and email
+        const [rows] = await pool.execute(
+            'SELECT * FROM owner_account WHERE username = ? OR email = ?',
+            [identifier, identifier] // Check against both fields
+        );
+        const user = rows[0];
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: user.id, type: 'owner' }, JWT_SECRET, { expiresIn: '3h' });
+        res.cookie('token', token, { httpOnly: true, maxAge: 3 * 60 * 60 * 1000 }); // 3 hours
+        res.json({ token });
     } catch (error) {
-      console.error('Login error:', error);
-      res.status(500).json({ message: 'An error occurred during login' });
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'An error occurred during login' });
     }
-  });
- 
+});
 
 
   app.post('/api/bookings', async (req, res) => {
@@ -210,6 +281,34 @@ app.post('/api/auth/signup', async (req, res) => {
         res.status(500).json({ message: 'An error occurred while booking' });
     }
 });
+
+
+
+app.post('/api/auth/logout', (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Logged out successfully' });
+});
+
+
+
+app.get('/userdashboard.html', checkAuth, (req, res) => {
+  if (req.userType !== 'user') {
+    return res.redirect('/account.html');
+  }
+  res.sendFile(path.join(__dirname, 'public', 'userdashboard.html'));
+});
+
+app.get('/ownerdashboard.html', checkAuth, (req, res) => {
+  if (req.userType !== 'owner') {
+    return res.redirect('/ownerlogin.html');
+  }
+  res.sendFile(path.join(__dirname, 'public', 'ownerdashboard.html'));
+});
+
+
+
+
+
 
 
 
@@ -249,6 +348,10 @@ app.post('/api/vehicles', upload.single('vehicleImage'), (req, res) => {
     }
   });
 });
+
+
+
+
 app.get('/api/vehicles', async (req, res) => {
     try {
         const [rows] = await pool.execute('SELECT * FROM vehicles');
@@ -303,41 +406,6 @@ app.delete('/api/vehicles/:id', async (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'home.html'));
-});
-
-app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'about.html'));
-});
-
-app.get('/booking', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'booking.html'));
-});
-
-app.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'contact.html'));
-});
-
-app.get('/account', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'account.html'));
-});
-
-app.get('/comment', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'comment.html'));
-});
-
-app.get('/owner', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'onwer.html'));
-});
-
-app.get('/user', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'user.html'));
-});
-
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-});
 
 
 app.listen(port, () => {
